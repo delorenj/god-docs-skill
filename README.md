@@ -21,7 +21,8 @@ god-docs-skill/
 └── assets/
     ├── COMPONENT-GOD-TEMPLATE.md   # Component doc template
     ├── DOMAIN-GOD-TEMPLATE.md      # Domain doc template
-    ├── pre-commit                  # Local freshness gate
+    ├── bootstrap-pre-commit        # Generates repo-specific pre-commit hook
+    ├── pre-commit                  # Generic fallback hook
     └── god-check.yml               # CI freshness gate
 ```
 
@@ -40,7 +41,8 @@ Rule of thumb: every source file belongs to exactly one domain. Without clear ow
 If relevant source files changed and the mapped GOD doc did not, that doc is stale.
 
 Enforcement layers:
-- `assets/pre-commit` for local checks.
+- `assets/bootstrap-pre-commit` (recommended) to generate a repo-specific local hook.
+- `assets/pre-commit` as an OSS-safe generic fallback local hook.
 - `assets/god-check.yml` for PR/CI checks.
 - Degenerate CLI (optional) for deeper transitive drift analysis.
 
@@ -82,10 +84,11 @@ cp assets/COMPONENT-GOD-TEMPLATE.md docs/templates/
 cp assets/DOMAIN-GOD-TEMPLATE.md docs/templates/
 
 # Install pre-commit hook
-mkdir -p .githooks
-cp assets/pre-commit .githooks/pre-commit
-chmod +x .githooks/pre-commit
-git config core.hooksPath .githooks
+bash assets/bootstrap-pre-commit
+# non-interactive:
+# bash assets/bootstrap-pre-commit --yes
+# explicit roots:
+# bash assets/bootstrap-pre-commit --components "api,worker,web"
 
 # Install CI workflow
 mkdir -p .github/workflows
@@ -97,7 +100,7 @@ cp docs/templates/COMPONENT-GOD-TEMPLATE.md my-service/GOD.md
 
 ## Optional: Degenerate CLI
 
-[Degenerate](https://github.com/delorenj/33GOD/tree/main/degenerate) is the Rust tool for deeper drift audits.
+Degenerate is a Rust CLI implementation for deeper drift audits.
 
 Useful for:
 - Transitive drift across domains/components.
@@ -114,7 +117,7 @@ Useful for:
 
 ## Origin
 
-GOD Docs came out of the [33GOD](https://github.com/delorenj/33GOD) ecosystem to keep multi-service architecture docs trustworthy at development speed.
+GOD Docs came out of multi-service monorepo workflows to keep architecture docs trustworthy at development speed.
 
 ## License
 

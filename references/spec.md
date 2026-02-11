@@ -161,6 +161,8 @@ The dirty-check answers one question: **"Which GOD Docs are stale given the curr
 
 Catches staleness before it leaves the developer's machine:
 
+In this skill package, generate this hook with `assets/bootstrap-pre-commit` so component roots are auto-detected (or manually provided) per repository.
+
 ```bash
 #!/bin/bash
 CHANGED=$(git diff --cached --name-only --diff-filter=ACM)
@@ -223,7 +225,7 @@ We built one. It's called **Degenerate**.
 
 > *"Fight the entropy of documentation."*
 
-[Degenerate](https://github.com/delorenj/33GOD/tree/main/degenerate) is a Rust CLI that implements the full GOD Doc dirty-check algorithm with transitive dependency resolution, git history analysis, and drift severity scoring.
+Degenerate is a Rust CLI that implements the full GOD Doc dirty-check algorithm with transitive dependency resolution, git history analysis, and drift severity scoring.
 
 ### Why a Dedicated Tool?
 
@@ -247,7 +249,7 @@ Degenerate maintains a **sync state file** (`docs/sync/last-sync.json`) that rec
   "last_sync": "2026-02-11T12:00:00Z",
   "domains": {
     "infrastructure": {
-      "services": ["bloodbank", "holyfields", "candystore"],
+      "services": ["api-gateway", "event-bus", "worker-service"],
       "last_commit": "a3f8c91",
       "last_sync_date": "2026-02-11T12:00:00Z"
     }
@@ -269,11 +271,11 @@ $ degenerate sync --dry-run
 🔍 Checking for documentation drift...
 
 ⚠ Infrastructure (12 commits behind)
-    → bloodbank (8 commits)
-    → holyfields (4 commits)
+    → api-gateway (8 commits)
+    → event-bus (4 commits)
 
 ⚠ Agent Orchestration (3 commits behind)
-    → flume (3 commits) [transitive: depends on bloodbank/GOD.md]
+    → worker-service (3 commits) [transitive: depends on api-gateway/GOD.md]
 
 ✓ Workspace Management (up to date)
 ✓ Dashboards & Voice (up to date)
@@ -432,4 +434,4 @@ degenerate sync --dry-run
 
 ---
 
-*GOD Docs were developed for [33GOD](https://github.com/delorenj/33GOD), an event-driven agentic pipeline. Degenerate is the reference implementation of the dirty-check system, written in Rust.*
+*GOD Docs were developed for multi-component, event-driven systems. Degenerate is a reference implementation of the dirty-check system, written in Rust.*

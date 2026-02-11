@@ -35,8 +35,13 @@ docs/domains/{domain}/GOD.md         # Level 1: Domain
    ```
 2. Copy templates from `assets/COMPONENT-GOD-TEMPLATE.md` and `assets/DOMAIN-GOD-TEMPLATE.md`
 3. Create system-level `docs/GOD.md` — see `references/spec.md` §3 for required sections
-4. Install git hook from `assets/pre-commit` → `.githooks/pre-commit`
-5. Run `git config core.hooksPath .githooks`
+4. Generate repo-specific git hook with `assets/bootstrap-pre-commit` (recommended)
+   ```bash
+   bash assets/bootstrap-pre-commit
+   # optional non-interactive mode:
+   # bash assets/bootstrap-pre-commit --yes
+   ```
+5. If needed, install `assets/pre-commit` as a generic fallback hook
 
 ### Create a Component GOD Doc
 

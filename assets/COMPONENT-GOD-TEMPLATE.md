@@ -23,7 +23,7 @@
 
 ```mermaid
 graph TB
-    subgraph "33GOD Pipeline"
+    subgraph "System Context"
         {{UPSTREAM_COMPONENTS}}
         Component[{{COMPONENT_NAME}}]
         {{DOWNSTREAM_COMPONENTS}}
@@ -39,7 +39,7 @@ graph TB
 
 ## Event Contracts
 
-### Bloodbank Events Emitted
+### Events Emitted
 
 | Event Name | Routing Key | Payload Schema | Trigger Condition |
 |------------|-------------|----------------|-------------------|
@@ -47,7 +47,7 @@ graph TB
 | `{{name}}` | `{{routing_key}}` | `{{schema}}` | {{trigger}} |
 {{/each}}
 
-### Bloodbank Events Consumed
+### Events Consumed
 
 | Event Name | Routing Key | Handler | Purpose |
 |------------|-------------|---------|---------|
